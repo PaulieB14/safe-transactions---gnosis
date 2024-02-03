@@ -6,9 +6,9 @@ dataSources:
     name: GnosisSafeProxyFactory
     network: gnosis
     source:
-      address: '0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2' # Update with the actual factory contract address
+      address: '0xa6B71E26C5e0845f74c812102Ca7114b6a896AB2' # The actual factory contract address
       abi: GnosisSafeProxyFactory
-      startBlock: 16236878 # Update with the actual deployment block of the factory contract
+      startBlock: 16236878 # The actual deployment block of the factory contract
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.7
@@ -21,7 +21,7 @@ dataSources:
       eventHandlers:
         - event: ProxyCreation(address,address)
           handler: handleProxyCreation
-      file: ./src/mapping-gnosis-safe-proxy-factory.ts
+      file: ./src/gnosis-safe-proxy-factory.ts
   - kind: ethereum
     name: GnosisSafe
     network: gnosis
@@ -36,9 +36,8 @@ dataSources:
         - UserActivity
       abis:
         - name: GnosisSafe
-          file: ./abis/GnosisSafe.json
-      eventHandlers:
-        - event: ExecutionSuccess(bytes32,uint256)
-          handler: handleExecutionSuccess
-        # Add more event handlers as needed for other Gnosis Safe events
-      file: ./src/mapping-gnosis-safe.ts
+          file: ./abis/GnosisSafeProxyFactory.json # Ensure this points to the correct ABI file for GnosisSafe
+      eventHandlers: [] # Explicitly define as an empty array if no event handlers
+      blockHandlers:
+        - handler: handleBlock # Placeholder block handler
+      file: ./src/gnosis-safe-proxy-factory.ts # Using the same mapping file for simplicity
