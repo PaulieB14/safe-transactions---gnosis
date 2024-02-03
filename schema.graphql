@@ -1,11 +1,11 @@
-type ProxyCreation @entity {
-  id: Bytes! # Unique identifier, typically the transaction hash
-  proxy: Bytes! # Address of the newly created proxy (safe)
-  singleton: Bytes! # Address of the singleton contract
+type ProxyContract @entity {
+  id: ID!
+  singleton: Bytes!
   blockNumber: BigInt!
   blockTimestamp: BigInt!
   transactionHash: Bytes!
 }
+
 
 type MultisigTransaction @entity {
   id: Bytes! # Unique identifier, typically the transaction hash
@@ -22,11 +22,7 @@ type MultisigTransaction @entity {
 }
 
 type UserActivity @entity {
-  id: ID! # A composite ID, possibly "safeAddress-userAddress"
+  id: ID! # A unique identifier, possibly "userAddress"
   user: Bytes! # Address of the user
   safes: [Bytes!]! # Addresses of safes the user is involved with
-  transactionsSubmitted: [MultisigTransaction!]!
-    @derivedFrom(field: "submittedBy")
-  transactionsApproved: [MultisigTransaction!]!
-    @derivedFrom(field: "approvedBy")
 }
